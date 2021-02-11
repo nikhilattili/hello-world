@@ -4,42 +4,17 @@ on:
     branches:
       - main
 
-jobs:
-  build:
-    name: 'gcr.io/cloud-builders/gcloud'
-    strategy: 
-      matrix:
-        node-version: [12.x]
-
-    steps:
-      - name: 'gcr.io/cloud-builders/gcloud'
-        id: checkout
-        uses: actions/checkout@v2
-        
-      - name: Cache node modules
-        uses: actions/cache@v1
-        with:
-          path: ~/.npm
-          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-node-
-
-      - name: Node ${{ matrix.node-version }}
-        uses: actions/setup-node@v1
-        with:
-          node-version: ${{ matrix.node-version }}
-      
-      - name: npm install and build
-        run: |
-          cd app/angular
-          npm install -g @angular/cli@9.1
-          npm install
-          npm run build-dev
-    
-      - name: 'gcr.io/cloud-builders/gcloud'
-        uses: actions-hub/gcloud@master
-        env:
-          APPLICATION_CREDENTIALS: ${{ secrets.GOOGLE_APPLICATION_CREDENTIALS_DEV }}
-          PROJECT_ID: ${{ secrets.PROJECT_ID_DEV }}
-        with:
-          args: "app deploy app/app.yaml --project=${{ secrets.PROJECT_ID_DEV }}"
+    - name: gcr.io/cloud-builders/gcloud'
+      run: |
+        cd app/angular
+        npm install -g @angular/cli@9.1
+        npm install
+        npm run build-dev
+  
+    - name: 'gcr.io/cloud-builders/gcloud'
+      uses: actions-hub/gcloud@master
+      env:
+        APPLICATION_CREDENTIALS: ${{ secrets.GOOGLE_APPLICATION_CREDENTIALS_DEV }}
+        PROJECT_ID: ${{ secrets.PROJECT_ID_DEV }}
+      with:
+        args: "app deploy app/app.yaml --project=${{ secrets.PROJECT_ID_DEV }}"
