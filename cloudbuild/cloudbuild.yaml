@@ -6,14 +6,14 @@ on:
 
 jobs:
   build:
-    name: DEV Build and Deploy to GAE
+    name: 'gcr.io/cloud-builders/gcloud'
     runs-on: ubuntu-latest
     strategy: 
       matrix:
         node-version: [12.x]
 
     steps:
-      - name: Checkout
+      - name: 'gcr.io/cloud-builders/gcloud'
         id: checkout
         uses: actions/checkout@v2
         
@@ -37,7 +37,7 @@ jobs:
           npm install
           npm run build-dev
     
-      - name: Deploy
+      - name: 'gcr.io/cloud-builders/gcloud'
         uses: actions-hub/gcloud@master
         env:
           APPLICATION_CREDENTIALS: ${{ secrets.GOOGLE_APPLICATION_CREDENTIALS_DEV }}
