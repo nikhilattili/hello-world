@@ -6,7 +6,7 @@
         npm install
         npm run build-dev
   steps: 
-    - name: 'gcr.io/cloud-builders/gcloud'
+    - name: 'gcr.io/cloud-builders/go'
       uses: actions-hub/gcloud@master
       env:
         APPLICATION_CREDENTIALS: ${{ secrets.GOOGLE_APPLICATION_CREDENTIALS_DEV }}
