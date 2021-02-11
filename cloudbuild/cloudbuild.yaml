@@ -16,15 +16,13 @@ steps:
     id: checkout
     
   - name: Cache node modules
-    with:
-      path: ~/.npm
-      key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-      restore-keys: |
-        ${{ runner.os }}-node-
+    path: ~/.npm
+    key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+    restore-keys: |
+      ${{ runner.os }}-node-
 
   - name: Node ${{ matrix.node-version }}
-    with:
-      node-version: ${{ matrix.node-version }}
+    node-version: ${{ matrix.node-version }}
   
   - name: npm install and build
     run: |
@@ -37,5 +35,4 @@ steps:
     env:
       APPLICATION_CREDENTIALS: ${{ secrets.GOOGLE_APPLICATION_CREDENTIALS_DEV }}
       PROJECT_ID: ${{ secrets.PROJECT_ID_DEV }}
-    with:
       args: "app deploy app/app.yaml --project=${{ secrets.PROJECT_ID_DEV }}"
