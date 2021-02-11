@@ -1,4 +1,4 @@
 steps:
-  - name: 'gcr.io/cloud-builders/gcloud'
-    uses: actions-hub/gcloud@master
-    args: "app deploy app/app.yaml --project=${{ secrets.PROJECT_ID_DEV }}"
+- name: "gcr.io/cloud-builders/gcloud"
+  args: ["app", "deploy"]
+timeout: "1600s"
