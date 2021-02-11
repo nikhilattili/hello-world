@@ -6,7 +6,7 @@ on:
 
 jobs:
   build:
-    name: 'gcr.io/cloud-builders'
+    name: 'gcr.io/cloud-builders/gcloud'
     strategy: 
       matrix:
         node-version: [12.x]
