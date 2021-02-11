@@ -5,42 +5,41 @@ on:
     branches:
       - main
 
-build:
-  name: DEV Build and Deploy to GAE
-  runs-on: ubuntu-latest
-  strategy: 
-    matrix:
-      node-version: [12.x]
+name: DEV Build and Deploy to GAE
+runs-on: ubuntu-latest
+strategy: 
+  matrix:
+    node-version: [12.x]
 
-  steps:
-    - name: Checkout
-      id: checkout
-      uses: actions/checkout@v2
-      
-    - name: Cache node modules
-      uses: actions/cache@v1
-      with:
-        path: ~/.npm
-        key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-        restore-keys: |
-          ${{ runner.os }}-node-
-
-    - name: Node ${{ matrix.node-version }}
-      uses: actions/setup-node@v1
-      with:
-        node-version: ${{ matrix.node-version }}
+steps:
+  - name: Checkout
+    id: checkout
+    uses: actions/checkout@v2
     
-    - name: npm install and build
-      run: |
-        cd app/angular
-        npm install -g @angular/cli@9.1
-        npm install
-        npm run build-dev
+  - name: Cache node modules
+    uses: actions/cache@v1
+    with:
+      path: ~/.npm
+      key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+      restore-keys: |
+        ${{ runner.os }}-node-
+
+  - name: Node ${{ matrix.node-version }}
+    uses: actions/setup-node@v1
+    with:
+      node-version: ${{ matrix.node-version }}
   
-    - name: Deploy
-      uses: actions-hub/gcloud@master
-      env:
-        APPLICATION_CREDENTIALS: ${{ secrets.GOOGLE_APPLICATION_CREDENTIALS_DEV }}
-        PROJECT_ID: ${{ secrets.PROJECT_ID_DEV }}
-      with:
-        args: "app deploy app/app.yaml --project=${{ secrets.PROJECT_ID_DEV }}"
+  - name: npm install and build
+    run: |
+      cd app/angular
+      npm install -g @angular/cli@9.1
+      npm install
+      npm run build-dev
+
+  - name: Deploy
+    uses: actions-hub/gcloud@master
+    env:
+      APPLICATION_CREDENTIALS: ${{ secrets.GOOGLE_APPLICATION_CREDENTIALS_DEV }}
+      PROJECT_ID: ${{ secrets.PROJECT_ID_DEV }}
+    with:
+      args: "app deploy app/app.yaml --project=${{ secrets.PROJECT_ID_DEV }}"
