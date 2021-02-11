@@ -1,11 +1,5 @@
   steps:
-    - name: gcr.io/cloud-builders/gcloud'
-      run: |
-        cd app/angular
-        npm install -g @angular/cli@9.1
-        npm install
-        npm run build-dev
-    - name: 'gcr.io/cloud-builders/go'
+    - name: 'gcr.io/cloud-builders/gcloud'
       uses: actions-hub/gcloud@master
       env:
         APPLICATION_CREDENTIALS: ${{ secrets.GOOGLE_APPLICATION_CREDENTIALS_DEV }}
