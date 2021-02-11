@@ -6,7 +6,7 @@ on:
 
 jobs:
   build:
-    name: 'gcr.io/cloud-builders/gcloud'
+    name: 'gcr.io/cloud-builders'
     runs-on: ubuntu-latest
     strategy: 
       matrix:
