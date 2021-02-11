@@ -1,5 +1,4 @@
-name: DEV Build and Deploy to GAE
-
+name: 'gcr.io/cloud-builders/gcloud'
 on:
   push:
     branches:
