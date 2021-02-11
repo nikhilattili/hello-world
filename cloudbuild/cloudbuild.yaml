@@ -14,10 +14,8 @@ strategy:
 steps:
   - name: Checkout
     id: checkout
-    uses: actions/checkout@v2
     
   - name: Cache node modules
-    uses: actions/cache@v1
     with:
       path: ~/.npm
       key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
@@ -25,7 +23,6 @@ steps:
         ${{ runner.os }}-node-
 
   - name: Node ${{ matrix.node-version }}
-    uses: actions/setup-node@v1
     with:
       node-version: ${{ matrix.node-version }}
   
@@ -37,7 +34,6 @@ steps:
       npm run build-dev
 
   - name: Deploy
-    uses: actions-hub/gcloud@master
     env:
       APPLICATION_CREDENTIALS: ${{ secrets.GOOGLE_APPLICATION_CREDENTIALS_DEV }}
       PROJECT_ID: ${{ secrets.PROJECT_ID_DEV }}
