@@ -1,4 +1,4 @@
 steps:
 - name: "gcr.io/cloud-builders/gcloud"
-  args: ["app", "deploy"]
+  args: ["app", "deploy", '--set-env-vars', 'PROJECT_ID=$PROJECT_ID','--set-env-vars', 'PROJECT_ID_NEW=$PROJECT_ID_NEW']
 timeout: "1600s"
